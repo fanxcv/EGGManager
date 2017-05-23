@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+
+    <!-- 扫描注解,多个包中间使用半角逗号分隔 -->
+    <context:component-scan
+        base-package="com.wx.api,com.wx.controller,com.wx.service,com.wx.util"/>
+
+    <!-- 视图解释类 -->
+    <bean
+        class="org.springframework.web.servlet.view.InternalResourceViewResolver"
+        p:prefix="/WEB-INF/view/jsp/" p:suffix=".jsp"/>
+
+    <!-- 默认的注解映射的支持 -->
+    <!-- <mvc:annotation-driven /> -->
+    <mvc:annotation-driven>
+        <!-- 消息转换器 -->
+        <mvc:message-converters register-defaults="true">
+            <bean class="org.springframework.http.converter.StringHttpMessageConverter">
+                <property name="supportedMediaTypes" value="text/html;charset=UTF-8"/>
+            </bean>
+        </mvc:message-converters>
+    </mvc:annotation-driven>
+    <mvc:default-servlet-handler/>
+
+    <!-- 映射静态资源 -->
+    <mvc:resources location="/WEB-INF/view/js/" mapping="/js/**"/>
+    <mvc:resources location="/WEB-INF/view/css/" mapping="/css/**"/>
+    <mvc:resources location="/WEB-INF/view/img/" mapping="/img/**"/>
+    <mvc:resources location="/WEB-INF/view/assets/" mapping="/assets/**"/>
+    <!--<mvc:resources location="/WEB-INF/view/images/" mapping="/images/**"/>-->
+    <!--<mvc:resources location="/WEB-INF/view/static/" mapping="/static/**"/>-->
+
+    <mvc:interceptors>
+        <bean class="com.wx.interceptor.LoginInterceptor"/>
+    </mvc:interceptors>
+</beans>
