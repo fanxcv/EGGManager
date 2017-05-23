@@ -1,12 +1,8 @@
 package com.wx.controller;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
-
-import javax.servlet.http.HttpSession;
+import com.wx.entity.User;
+import com.wx.service.OVService;
+import com.wx.util.ServletUtils;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,9 +12,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.wx.entity.User;
-import com.wx.service.OVService;
-import com.wx.util.ServletUtils;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Random;
+
+import javax.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("/Admin/User")
@@ -64,7 +65,7 @@ public class UserController extends ServletUtils {
 			@RequestParam(value = "remarks", required = false) String remarks, @RequestParam String group) {
 		String error = null;
 		if (service.userfindByName(username) == null) {
-			Map<String, Object> param = new HashMap<String, Object>();
+			Map<String, Object> param = new HashMap<>();
 			param.put("username", username);
 			param.put("password", password);
 			param.put("remarks", remarks);
@@ -86,9 +87,10 @@ public class UserController extends ServletUtils {
 	@RequestMapping(value = "/addAdmin", method = RequestMethod.POST, produces = { "text/html;charset=UTF-8;" })
 	public String addAdmin(@RequestParam String username, @RequestParam String password,
 			@RequestParam(value = "remarks", required = false) String remarks) {
-		String error = null;
+		String error;
 		if (service.userfindByName(username) == null) {
-			Map<String, Object> param = new HashMap<String, Object>();
+			Map<String, Object> param = new HashMap<>();
+			param.put("due_time", upTime(new Date(), 31));
 			param.put("username", username);
 			param.put("password", password);
 			param.put("remarks", remarks);

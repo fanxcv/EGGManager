@@ -21,20 +21,16 @@ public class OVServiceImpl extends BaseUtils implements OVService {
 
 	@Override
 	public User login(String username, String password) {
-		Map<String, Object> param = new HashMap<String, Object>();
+		Map<String, Object> param = new HashMap<>();
 		param.put("username", username);
 		param.put("password", password);
-		User user = dao.userfind(param);
-		if (user != null && user.getId() != null) {
-			return user;
-		}
-		return null;
+		return dao.userfind(param);
 	}
 
 	@Override
 	public User getUserById(String id) {
 		if (notEmpty(id)) {
-			Map<String, Object> param = new HashMap<String, Object>();
+			Map<String, Object> param = new HashMap<>();
 			param.put("id", id);
 			return dao.userfind(param);
 		}
