@@ -1,340 +1,369 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.wx.dao.OVDao">
 
-	<select id="userfind" resultType="User" parameterType="map">
-		SELECT * FROM `user`
-		<where>
-			<if test="id != null">
-				AND `id` = #{id}
-			</if>
-			<if test="username != null">
-				AND `username` = #{username}
-			</if>
-			<if test="password != null">
-				AND `password` = #{password}
-			</if>
-		</where>
-	</select>
-	<select id="userCount" resultType="string" parameterType="map">
-		SELECT count(`id`) FROM `user`
-		<where>
-			<if test="u_u_id != null">
-				AND `u_u_id` = #{u_u_id}
-			</if>
-			<if test="role != null">
-				AND `role` >= #{role}
-			</if>
-		</where>
-	</select>
-	<select id="userfindList" resultType="Map" parameterType="Map">
-		SELECT
-		u.`id`,u.`username`,u.`password`,u.`remarks`,u.`money`,u.`key`,u.`locked`,g.`name`
-		FROM `user` u,`group` g WHERE u.`group` = g.`id`
-		<if test="locked != null">
-			AND `locked` = #{locked}
-		</if>
-		<if test="type != null">
-			AND `type` = 0
-		</if>
-		<if test="u_u_id != null">
-			AND `u_u_id` = #{u_u_id}
-		</if>
-		<if test="role != null">
-			<choose>
-				<when test="role == 0">
-					AND `role` = #{role}
-				</when>
-				<otherwise>
-					AND `role` >= #{role}
-				</otherwise>
-			</choose>
-		</if>
-	</select>
-	<select id="userfindListById" resultType="User" parameterType="map">
-		SELECT `username`,`password` FROM `user` WHERE `id` in
-		<foreach collection="list" item="id" open="(" separator=","
-			close=")">
-			#{id}
-		</foreach>
-	</select>
-	<delete id="userDel" parameterType="string">
-		DELETE FROM `user` WHERE `id`
-		= #{id}
-	</delete>
-	<delete id="userDels" parameterType="list">
-		DELETE FROM `user` WHERE `id` in
-		<foreach collection="list" item="id" open="(" separator=","
-			close=")">
-			#{id}
-		</foreach>
-	</delete>
-	<update id="userUpdate" parameterType="Map">
-		UPDATE `user`
-		<set>
-			<if test="username != null and username != ''">
-				`username` = #{username},
-			</if>
-			<if test="password != null and password != ''">
-				`password` = #{password},
-			</if>
-			<if test="remarks != null">
-				`remarks` = #{remarks},
-			</if>
-			<if test="locked != null and locked != ''">
-				`locked` = #{locked},
-			</if>
-			<if test="money != null and money != ''">
-				`money` = #{money},
-			</if>
-			<if test="group != null and group != ''">
-				`group` = #{group},
-			</if>
-			`id` = #{id},
-		</set>
-		WHERE `id` = #{id}
-	</update>
-	<insert id="userAdd" parameterType="Map" useGeneratedKeys="true"
-		keyProperty="id">
-		INSERT INTO `user`
-		<set>
-			<if test="username != null and username != ''">
-				`username` = #{username},
-			</if>
-			<if test="password != null and password != ''">
-				`password` = #{password},
-			</if>
-			<if test="remarks != null">
-				`remarks` = #{remarks},
-			</if>
-			<if test="active_time != null and active_time != ''">
-				`active_time` = #{active_time},
-			</if>
-			<if test="due_time != null and due_time != ''">
-				`due_time` = #{due_time},
-			</if>
-			<if test="money != null and money != ''">
-				`money` = #{money},
-			</if>
-			<if test="group != null and group != ''">
-				`group` = #{group},
-			</if>
-			<if test="role != null and role != ''">
-				`role` = #{role},
-			</if>
-			<if test="type != null and type != ''">
-				`type` = #{type},
-			</if>
-			<if test="key != null and key != ''">
-				`key` = #{key},
-			</if>
-			<if test="locked != null and locked != ''">
-				`locked` = #{locked},
-			</if>
-			<if test="lastLoginTime != null and lastLoginTime != ''">
-				`lastLoginTime` = #{lastLoginTime},
-			</if>
-			<if test="u_u_id != null and u_u_id != ''">
-				`u_u_id` = #{u_u_id},
-			</if>
-		</set>
-	</insert>
+    <select id="userfind" resultType="User" parameterType="map">
+        SELECT * FROM `user`
+        <where>
+            <if test="id != null">
+                AND `id` = #{id}
+            </if>
+            <if test="username != null">
+                AND `username` = #{username}
+            </if>
+            <if test="password != null">
+                AND `password` = #{password}
+            </if>
+        </where>
+    </select>
+    <select id="userCount" resultType="string" parameterType="map">
+        SELECT count(`id`) FROM `user`
+        <where>
+            <if test="u_u_id != null">
+                AND `u_u_id` = #{u_u_id}
+            </if>
+            <if test="role != null">
+                AND `role` >= #{role}
+            </if>
+        </where>
+    </select>
+    <select id="userfindList" resultType="Map" parameterType="Map">
+        SELECT
+        u.`id`,u.`username`,u.`password`,u.`remarks`,u.`money`,u.`key`,u.`locked`,g.`name`
+        FROM `user` u,`group` g WHERE u.`group` = g.`id`
+        <if test="locked != null">
+            AND `locked` = #{locked}
+        </if>
+        <if test="type != null">
+            AND `type` = 0
+        </if>
+        <if test="u_u_id != null">
+            AND `u_u_id` = #{u_u_id}
+        </if>
+        <if test="role != null">
+            <choose>
+                <when test="role == 0">
+                    AND `role` = #{role}
+                </when>
+                <otherwise>
+                    AND `role` >= #{role}
+                </otherwise>
+            </choose>
+        </if>
+    </select>
+    <select id="userfindListById" resultType="User" parameterType="map">
+        SELECT `username`,`password` FROM `user` WHERE `id` in
+        <foreach collection="list" item="id" open="(" separator=","
+                 close=")">
+            #{id}
+        </foreach>
+    </select>
+    <delete id="userDel" parameterType="string">
+        DELETE FROM `user`
+        WHERE `id`
+              = #{id}
+    </delete>
+    <delete id="userDels" parameterType="list">
+        DELETE FROM `user` WHERE `id` in
+        <foreach collection="list" item="id" open="(" separator=","
+                 close=")">
+            #{id}
+        </foreach>
+    </delete>
+    <update id="userUpdate" parameterType="Map">
+        UPDATE `user`
+        <set>
+            <if test="username != null and username != ''">
+                `username` = #{username},
+            </if>
+            <if test="password != null and password != ''">
+                `password` = #{password},
+            </if>
+            <if test="remarks != null">
+                `remarks` = #{remarks},
+            </if>
+            <if test="locked != null and locked != ''">
+                `locked` = #{locked},
+            </if>
+            <if test="money != null and money != ''">
+                `money` = #{money},
+            </if>
+            <if test="group != null and group != ''">
+                `group` = #{group},
+            </if>
+            `id` = #{id},
+        </set>
+        WHERE `id` = #{id}
+    </update>
+    <insert id="userAdd" parameterType="Map" useGeneratedKeys="true"
+            keyProperty="id">
+        INSERT INTO `user`
+        <set>
+            <if test="username != null and username != ''">
+                `username` = #{username},
+            </if>
+            <if test="password != null and password != ''">
+                `password` = #{password},
+            </if>
+            <if test="remarks != null">
+                `remarks` = #{remarks},
+            </if>
+            <if test="active_time != null and active_time != ''">
+                `active_time` = #{active_time},
+            </if>
+            <if test="due_time != null and due_time != ''">
+                `due_time` = #{due_time},
+            </if>
+            <if test="money != null and money != ''">
+                `money` = #{money},
+            </if>
+            <if test="group != null and group != ''">
+                `group` = #{group},
+            </if>
+            <if test="role != null and role != ''">
+                `role` = #{role},
+            </if>
+            <if test="type != null and type != ''">
+                `type` = #{type},
+            </if>
+            <if test="key != null and key != ''">
+                `key` = #{key},
+            </if>
+            <if test="locked != null and locked != ''">
+                `locked` = #{locked},
+            </if>
+            <if test="lastLoginTime != null and lastLoginTime != ''">
+                `lastLoginTime` = #{lastLoginTime},
+            </if>
+            <if test="u_u_id != null and u_u_id != ''">
+                `u_u_id` = #{u_u_id},
+            </if>
+        </set>
+    </insert>
 
 
+    <select id="findGroupList" resultType="Map" parameterType="String">
+        SELECT
+            `id`,
+            `name`
+        FROM
+            `group`
+        WHERE `u_id` = #{id}
+    </select>
+    <insert id="addGroup" parameterType="Map">
+        INSERT INTO `group` (`name`,
+                             `u_id`) VALUES (#{name},
+                                             #{u_id})
+    </insert>
+    <delete id="delGroup" parameterType="String">
+        DELETE FROM `group`
+        WHERE
+            `id` = #{id}
+    </delete>
 
 
-	<select id="findGroupList" resultType="Map" parameterType="String">
-		SELECT `id`,`name` FROM
-		`group` WHERE `u_id` = #{id}
-	</select>
-	<insert id="addGroup" parameterType="Map">
-		INSERT INTO `group` (`name`,
-		`u_id`) VALUES (#{name},
-		#{u_id})
-	</insert>
-	<delete id="delGroup" parameterType="String">
-		DELETE FROM `group` WHERE
-		`id` = #{id}
-	</delete>
+    <select id="findLineList" resultType="Map" parameterType="string">
+        SELECT
+            `id`,
+            `name`,
+            `type`
+        FROM `line`
+        WHERE `u_id` = NULL OR `u_id` = #{id}
+        ORDER BY `index` ASC;
+    </select>
+    <select id="findLineById" resultType="Line" parameterType="string">
+        SELECT
+            `id`,
+            `name`,
+            `index`,
+            `value`
+        FROM `line`
+        WHERE `id` = #{id}
+    </select>
+    <delete id="delLine" parameterType="string">
+        DELETE FROM `line`
+        WHERE `id`
+              = #{id}
+    </delete>
+    <insert id="addLine" parameterType="map">
+        INSERT INTO `line`
+        <set>
+            <if test="name != null">
+                `name` = #{name},
+            </if>
+            <if test="flag != null">
+                `flag` = #{flag},
+            </if>
+            <if test="type != null">
+                `type` = #{type},
+            </if>
+            <if test="index != null">
+                `index` = #{index},
+            </if>
+            <if test="value != null">
+                `value` = #{value},
+            </if>
+            <if test="u_id != null">
+                `u_id` = #{u_id},
+            </if>
+        </set>
+    </insert>
+    <update id="updateLine" parameterType="map">
+        UPDATE `line`
+        <set>
+            <if test="name != null">
+                `name` = #{name},
+            </if>
+            <if test="index != null">
+                `index` = #{index},
+            </if>
+            <if test="value != null">
+                `value` = #{value},
+            </if>
+        </set>
+        <where>
+            <if test="id != null">
+                AND `id` = #{id}
+            </if>
+        </where>
+    </update>
 
 
+    <select id="findPackList" resultType="Map" parameterType="map">
+        SELECT p.`id`,p.`name`,p.`price`,p.`time`,g.`name` groupName FROM
+        `package`
+        p,`group`
+        g WHERE p.u_id = #{u_id} AND p.`group` = g.id
+        <if test="group != null">
+            AND p.`group` = #{group}
+        </if>
+    </select>
+    <select id="findPackById" resultType="Map" parameterType="String">
+        SELECT
+            p.`id`,
+            p.`name`,
+            p.`price`,
+            p.`time`,
+            g.`id` gId
+        FROM
+            `package`
+            p, `group`
+               g
+        WHERE p.id = #{id} AND p.`group` = g.id
+    </select>
+    <delete id="delPack" parameterType="string">
+        DELETE FROM `package`
+        WHERE
+            `id` = #{id}
+    </delete>
+    <insert id="addPack" parameterType="Map">
+        INSERT INTO `package`
+        (`name`, `time`, `price`,
+         `group`, `u_id`) VALUES
+            (#{name}, #{time},
+             #{price}, #{group},
+             #{u_id});
+    </insert>
+    <update id="updatePack" parameterType="map">
+        UPDATE `package`
+        <set>
+            <if test="name != null and name != ''">
+                `name` = #{name},
+            </if>
+            <if test="time != null and time != ''">
+                `time` = #{time},
+            </if>
+            <if test="price != null and price != ''">
+                `price` = #{price},
+            </if>
+            <if test="group != null and group != ''">
+                `group` = #{group},
+            </if>
+        </set>
+        WHERE `id` = #{id}
+    </update>
 
 
-	<select id="findLineList" resultType="Map" parameterType="string">
-		SELECT
-		`id`,`name`,`type` FROM `line` WHERE `u_id` = NULL OR `u_id` = #{id}
-		ORDER BY `index` asc;
-	</select>
-	<select id="findLineById" resultType="Line" parameterType="string">
-		SELECT `id`,`name`,`index`,`value` FROM `line` WHERE `id` = #{id}
-	</select>
-	<delete id="delLine" parameterType="string">
-		DELETE FROM `line` WHERE `id`
-		= #{id}
-	</delete>
-	<insert id="addLine" parameterType="map">
-		INSERT INTO `line`
-		<set>
-			<if test="name != null">
-				`name` = #{name},
-			</if>
-			<if test="flag != null">
-				`flag` = #{flag},
-			</if>
-			<if test="type != null">
-				`type` = #{type},
-			</if>
-			<if test="index != null">
-				`index` = #{index},
-			</if>
-			<if test="value != null">
-				`value` = #{value},
-			</if>
-			<if test="u_id != null">
-				`u_id` = #{u_id},
-			</if>
-		</set>
-	</insert>
-	<update id="updateLine" parameterType="map">
-		UPDATE `line`
-		<set>
-			<if test="name != null">
-				`name` = #{name},
-			</if>
-			<if test="index != null">
-				`index` = #{index},
-			</if>
-			<if test="value != null">
-				`value` = #{value},
-			</if>
-		</set>
-		<where>
-			<if test="id != null">
-				AND `id` = #{id}
-			</if>
-		</where>
-	</update>
+    <select id="codeCount" resultType="string" parameterType="string">
+        SELECT count(`id`)
+        FROM `code`
+        WHERE `u_id` = #{id}
+    </select>
+    <select id="getCodeByBatch" resultType="String" parameterType="Map">
+        SELECT `code`
+        FROM `code`
+        WHERE `batch` = #{batch} AND `u_id` = #{u_id}
+    </select>
+    <resultMap type="java.util.HashMap" id="InfoMap">
+        <result property="time" column="time" javaType="Long"/>
+        <result property="money" column="money" javaType="Long"/>
+        <result property="price" column="price" javaType="Long"/>
+    </resultMap>
+    <select id="findInfo" resultMap="InfoMap" parameterType="Map">
+        SELECT
+            p.price,
+            p.time,
+            u.money
+        FROM `package` p, `user` u
+        WHERE p.id = #{pid} AND
+              u.id = #{uid}
+    </select>
+    <select id="findCodeGroup" resultType="Map" parameterType="String">
+        SELECT
+            c.`batch`,
+            ci.`remark`,
+            COUNT(c.`id`) num
+        FROM `code`
+             c, `code_info` ci
+        WHERE c.`u_id` = #{id} AND c.`batch` = ci.`c_batch`
+        GROUP
+        BY c.`batch`
+    </select>
+    <insert id="addCode_Info" parameterType="Map">
+        INSERT INTO `code_info`
+        (`remark`, `c_batch`, `u_id`) VALUES
+            (#{remark}, #{batch}, #{u_id})
+    </insert>
+    <insert id="addCode" parameterType="Map">
+        INSERT INTO `code` (`code`, `time`, `batch`, `u_id`) VALUES
+        <foreach collection="list" item="code" separator=",">
+            (#{code.code},#{code.time},#{code.batch},#{code.u_id})
+        </foreach>
+    </insert>
 
 
-
-
-	<select id="findPackList" resultType="Map" parameterType="map">
-		SELECT p.`id`,p.`name`,p.`price`,p.`time`,g.`name` groupName FROM
-		`package`
-		p,`group`
-		g WHERE p.u_id = #{u_id} AND p.`group` = g.id
-		<if test="group != null">
-			AND p.`group` = #{group}
-		</if>
-	</select>
-	<select id="findPackById" resultType="Map" parameterType="String">
-		SELECT
-		p.`id`,p.`name`,p.`price`,p.`time`,g.`id` gId FROM
-		`package`
-		p,`group`
-		g
-		WHERE p.id = #{id} AND p.`group` = g.id
-	</select>
-	<delete id="delPack" parameterType="string">
-		DELETE FROM `package` WHERE
-		`id` = #{id}
-	</delete>
-	<insert id="addPack" parameterType="Map">
-		INSERT INTO `package`
-		(`name`, `time`, `price`,
-		`group`, `u_id`) VALUES
-		(#{name}, #{time},
-		#{price}, #{group},
-		#{u_id});
-	</insert>
-	<update id="updatePack" parameterType="map">
-		UPDATE `package`
-		<set>
-			<if test="name != null and name != ''">
-				`name` = #{name},
-			</if>
-			<if test="time != null and time != ''">
-				`time` = #{time},
-			</if>
-			<if test="price != null and price != ''">
-				`price` = #{price},
-			</if>
-			<if test="group != null and group != ''">
-				`group` = #{group},
-			</if>
-		</set>
-		WHERE `id` = #{id}
-	</update>
-
-
-
-
-	<select id="codeCount" resultType="string" parameterType="string">
-		SELECT
-		count(`id`) FROM `code` WHERE `u_id` = #{id}
-	</select>
-	<select id="getCodeByBatch" resultType="String" parameterType="Map">
-		SELECT `code` FROM `code` WHERE `batch`=#{batch} AND `u_id`=#{u_id}
-	</select>
-	<resultMap type="java.util.HashMap" id="InfoMap">
-		<result property="time" column="time" javaType="Long" />
-		<result property="money" column="money" javaType="Long" />
-		<result property="price" column="price" javaType="Long" />
-	</resultMap>
-	<select id="findInfo" resultMap="InfoMap" parameterType="Map">
-		SELECT
-		p.price,p.time,u.money FROM `package` p,`user` u WHERE p.id=#{pid} AND
-		u.id=#{uid}
-	</select>
-	<select id="findCodeGroup" resultType="Map" parameterType="String">
-		SELECT
-		c.`batch`,ci.`remark`,COUNT(c.`id`) num FROM `code`
-		c,`code_info` ci WHERE c.`u_id` = #{id} AND c.`batch` = ci.`c_batch`
-		GROUP
-		BY c.`batch`
-	</select>
-	<insert id="addCode_Info" parameterType="Map">
-		INSERT INTO `code_info`
-		(`remark`, `c_batch`, `u_id`) VALUES
-		(#{remark}, #{batch}, #{u_id})
-	</insert>
-	<insert id="addCode" parameterType="Map">
-		INSERT INTO `code` (`code`, `time`, `batch`, `u_id`) VALUES
-		<foreach collection="list" item="code" separator=",">
-			(#{code.code},#{code.time},#{code.batch},#{code.u_id})
-		</foreach>
-	</insert>
-
-
-
-
-	<select id="getIndexExplain" resultType="string">
-		SELECT `indexExplain`
-		FROM `setting` WHERE `u_id` = '1'
-	</select>
-	<insert id="settingAdd" parameterType="Object">
-		INSERT INTO
-		`setting`(`u_id`) VALUES(#{id})
-	</insert>
-	<update id="updateSetting" parameterType="Map">
-		UPDATE `setting`
-		<set>
-			<if test="indexExplain != null">
-				`indexExplain` = #{indexExplain},
-			</if>
-			<if test="AppExplain != null">
-				`AppExplain` = #{AppExplain},
-			</if>
-			<if test="AppNotice != null">
-				`AppNotice` = #{AppNotice},
-			</if>
-			<if test="buyUrl != null">
-				`buyUrl` = #{buyUrl},
-			</if>
-			<if test="QQ != null">
-				`QQ` = #{QQ},
-			</if>
-		</set>
-		WHERE `u_id` = #{u_id}
-	</update>
+    <select id="getIndexExplain" resultType="string">
+        SELECT `indexExplain`
+        FROM `setting`
+        WHERE `u_id` = '1'
+    </select>
+    <insert id="settingAdd" parameterType="Object">
+        INSERT INTO
+            `setting` (`u_id`) VALUES (#{id})
+    </insert>
+    <update id="updateSetting" parameterType="Map">
+        UPDATE `setting`
+        <set>
+            <if test="indexExplain != null">
+                `indexExplain` = #{indexExplain},
+            </if>
+            <if test="AppExplain != null">
+                `AppExplain` = #{AppExplain},
+            </if>
+            <if test="AppNotice != null">
+                `AppNotice` = #{AppNotice},
+            </if>
+            <if test="buyUrl != null">
+                `buyUrl` = #{buyUrl},
+            </if>
+            <if test="regDay != null">
+                `regDay` = #{regDay},
+            </if>
+            <if test="QQ != null">
+                `QQ` = #{QQ},
+            </if>
+        </set>
+        WHERE `u_id` = #{u_id}
+    </update>
 </mapper>

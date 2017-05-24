@@ -26,7 +26,8 @@ public class ServletUtils extends BaseUtils {
                 byte[] b = new byte[fis.available()];
                 fis.read(b);
                 response.reset();
-                response.setContentType("application/x-msdownload");
+                response.setContentType("text/txt");
+                response.setHeader("Content-Type", "application/force-download");
                 response.setHeader("Content-Disposition", "attachment; filename=" + filename);
                 response.setContentLength(b.length);
                 out.write(b);
@@ -44,6 +45,7 @@ public class ServletUtils extends BaseUtils {
     }
 
     protected Date strToDate(String str) {
+        if (str == null) return null;
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         try {
             return sdf.parse(str);

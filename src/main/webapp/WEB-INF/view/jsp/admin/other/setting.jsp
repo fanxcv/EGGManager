@@ -53,16 +53,23 @@
 										<textarea class="form-control" name="AppExplain" id="AppExplain" style="margin-bottom: 10px;"></textarea>
 										<button type="submit" class="btn btn-sm btn-success" onclick="jssubmit($('#setting'), '<%=request.getContextPath()%>/Admin/Setting/AppExplain')">保存</button>
 									</div>
-									<div class="form-group text-center">
-										<label for="AppNotice">APP提示</label>
-										<textarea class="form-control" name="AppNotice" id="AppNotice" style="margin-bottom: 10px;"></textarea>
-										<button type="submit" class="btn btn-sm btn-success" onclick="jssubmit($('#setting'), '<%=request.getContextPath()%>/Admin/Setting/AppNotice')">保存</button>
-									</div>
+									<%--<div class="form-group text-center">--%>
+										<%--<label for="AppNotice">APP提示</label>--%>
+										<%--<textarea class="form-control" name="AppNotice" id="AppNotice" style="margin-bottom: 10px;"></textarea>--%>
+										<%--<button type="submit" class="btn btn-sm btn-success" onclick="jssubmit($('#setting'), '<%=request.getContextPath()%>/Admin/Setting/AppNotice')">保存</button>--%>
+									<%--</div>--%>
 									<div class="form-group text-center">
 										<label for="buyUrl">购买地址</label>
 										<input type="text" class="form-control" name="buyUrl" id="buyUrl" style="margin-bottom: 10px;">
 										<button type="submit" class="btn btn-sm btn-success" onclick="jssubmit($('#setting'), '<%=request.getContextPath()%>/Admin/Setting/buyUrl')">保存</button>
 									</div>
+									<c:if test="${logged.role <= '2'}">
+										<div class="form-group text-center">
+											<label for="QQ">注册赠送天数</label>
+											<input type="text" class="form-control" name="regDay" id="regDay" style="margin-bottom: 10px;">
+											<button type="submit" class="btn btn-sm btn-success" onclick="jssubmit($('#setting'), '<%=request.getContextPath()%>/Admin/Setting/regDay')">保存</button>
+										</div>
+									</c:if>
 									<div class="form-group text-center">
 										<label for="QQ">联系QQ</label>
 										<input type="text" class="form-control" name="QQ" id="QQ" style="margin-bottom: 10px;">

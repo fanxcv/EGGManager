@@ -36,13 +36,13 @@ public class LoginController extends ServletUtils {
                         error = "账号已到期";
                 } else if ("3".equals(user.getRole())) {
                     User admin = service.getUserById(user.getU_u_id());
-                    if ("2".equals(admin.getRole())) {
-                        if ("0".equals(DateDown(strToDate(admin.getDue_time()), new Date())))
-                            error = "管理账号已到期";
-                    }
+                    if ("0".equals(DateDown(strToDate(admin.getDue_time()), new Date())))
+                        error = "管理账号已到期";
                 }
-                session.setAttribute("logged", user);
-                return new ModelAndView("redirect:/LoginCtrl/index.do");
+                if (error == null) {
+                    session.setAttribute("logged", user);
+                    return new ModelAndView("redirect:/LoginCtrl/index.do");
+                }
             } else {
                 error = "账号或密码错误";
             }

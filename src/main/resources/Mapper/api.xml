@@ -1,103 +1,105 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.wx.dao.ApiDao">
 
 
-	<select id="findVersionByName" resultType="float" parameterType="String">
+    <select id="findVersionByName" resultType="float" parameterType="String">
 		SELECT `version` FROM `version` WHERE `name`=#{name}
 	</select>
-	<select id="getAdminInfo" parameterType="String" resultType="Map">
+    <select id="getAdminInfo" parameterType="String" resultType="Map">
 		SELECT `id` FROM `user` WHERE `key`=#{key}
 	</select>
-	<select id="getAppInfo" parameterType="String" resultType="Map">
+    <select id="getAppInfo" parameterType="String" resultType="Map">
 		SELECT `AppExplain`,`buyUrl`,`QQ` FROM `setting` WHERE `u_id`=#{id}
 	</select>
+    <select id="findRegDay" parameterType="String" resultType="Long">
+        SELECT `regDay` FROM `setting` WHERE `u_id`=#{id}
+    </select>
 
-	<!-- 用户信息处理逻辑 -->
-	<resultMap type="Map" id="userInfoMap">
-		<result property="active_time" column="active_time" javaType="String" />
-		<result property="due_time" column="due_time" javaType="String" />
-		<result property="u_u_id" column="u_u_id" javaType="String" />
-		<result property="id" column="id" javaType="String" />
-	</resultMap>
-	<select id="getUserInfo" parameterType="Map" resultMap="userInfoMap">
+    <!-- 用户信息处理逻辑 -->
+    <resultMap type="Map" id="userInfoMap">
+        <result property="active_time" column="active_time" javaType="String"/>
+        <result property="due_time" column="due_time" javaType="String"/>
+        <result property="u_u_id" column="u_u_id" javaType="String"/>
+        <result property="id" column="id" javaType="String"/>
+    </resultMap>
+    <select id="getUserInfo" parameterType="Map" resultMap="userInfoMap">
 		SELECT
 		u.`id`,u.`active_time`,u.`due_time`,u.`u_u_id` FROM `user` u WHERE
 		username=#{name}
 	</select>
-	<select id="getUId" parameterType="String" resultType="Map">
+    <select id="getUId" parameterType="String" resultType="Map">
 		SELECT
 		`role`,`u_u_id` FROM `user` WHERE `id`=#{id}
 	</select>
-	<update id="userUpdate" parameterType="Map">
-		UPDATE `user`
-		<set>
-			<if test="lastLoginTime != null">
-				`lastLoginTime` = #{lastLoginTime},
-			</if>
-			<if test="active_time != null">
-				`active_time` = #{active_time},
-			</if>
-			<if test="due_time != null">
-				`due_time` = #{due_time},
-			</if>
-			<if test="u_u_id != null">
-				`u_u_id` = #{u_u_id},
-			</if>
-		</set>
-		WHERE `id` = #{id}
-	</update>
-	<insert id="userAdd" parameterType="Map">
-		INSERT INTO `user`
-		<set>
-			<if test="name != null">
-				`username` = #{name},
-			</if>
-			<if test="pass != null">
-				`password` = #{pass},
-			</if>
-			<if test="remark != null">
-				`remarks` = #{remark},
-			</if>
-			<if test="lastLoginTime != null">
-				`lastLoginTime` = #{lastLoginTime},
-			</if>
-			<if test="active_time != null">
-				`active_time` = #{active_time},
-			</if>
-			<if test="due_time != null">
-				`due_time` = #{due_time},
-			</if>
-			<if test="u_id != null">
-				`u_u_id` = #{u_id},
-			</if>
-			`type` = '1',
-		</set>
-	</insert>
+    <update id="userUpdate" parameterType="Map">
+        UPDATE `user`
+        <set>
+            <if test="lastLoginTime != null">
+                `lastLoginTime` = #{lastLoginTime},
+            </if>
+            <if test="active_time != null">
+                `active_time` = #{active_time},
+            </if>
+            <if test="due_time != null">
+                `due_time` = #{due_time},
+            </if>
+            <if test="u_u_id != null">
+                `u_u_id` = #{u_u_id},
+            </if>
+        </set>
+        WHERE `id` = #{id}
+    </update>
+    <insert id="userAdd" parameterType="Map">
+        INSERT INTO `user`
+        <set>
+            <if test="name != null">
+                `username` = #{name},
+            </if>
+            <if test="pass != null">
+                `password` = #{pass},
+            </if>
+            <if test="remark != null">
+                `remarks` = #{remark},
+            </if>
+            <if test="lastLoginTime != null">
+                `lastLoginTime` = #{lastLoginTime},
+            </if>
+            <if test="active_time != null">
+                `active_time` = #{active_time},
+            </if>
+            <if test="due_time != null">
+                `due_time` = #{due_time},
+            </if>
+            <if test="u_id != null">
+                `u_u_id` = #{u_id},
+            </if>
+            `type` = '1',
+        </set>
+    </insert>
 
 
-
-	<resultMap type="Map" id="lineListMap">
-		<result column="id" property="id" javaType="String" />
-		<result column="name" property="name" javaType="String" />
-	</resultMap>
-	<select id="findLineList" parameterType="String" resultMap="lineListMap">
+    <resultMap type="Map" id="lineListMap">
+        <result column="id" property="id" javaType="String"/>
+        <result column="name" property="name" javaType="String"/>
+    </resultMap>
+    <select id="findLineList" parameterType="String" resultMap="lineListMap">
 		SELECT `id`,`name` FROM `line` WHERE `u_id` = NULL OR `u_id` = #{id}
 		ORDER BY `index` asc;
 	</select>
-	<select id="findLine" parameterType="String" resultType="Map">
+    <select id="findLine" parameterType="String" resultType="Map">
 		SELECT
 		`value`,`type` FROM `line` WHERE `id` = #{id}
 	</select>
 
 
-
-	<select id="findCodeTime" parameterType="Map" resultType="Integer">
-		SELECT
-		`time` FROM `code` WHERE `code` = #{code}
-		<!-- AND `u_id` = #{u_id} -->
-	</select>
-	<delete id="delCode" parameterType="Map">
+    <select id="findCodeTime" parameterType="Map" resultType="Integer">
+        SELECT
+        `time` FROM `code` WHERE `code` = #{code}
+        <!-- AND `u_id` = #{u_id} -->
+    </select>
+    <delete id="delCode" parameterType="Map">
 		DELETE FROM `code` WHERE
 		`code` = #{code}
 	</delete>
