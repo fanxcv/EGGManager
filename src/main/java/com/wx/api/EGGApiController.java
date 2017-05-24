@@ -95,14 +95,16 @@ public class EGGApiController extends ServletUtils {
                     list.put("user", gson.toJson(user));
                 } else {
                     long initDay = service.findRegDay(admin.get("id") + "");
-                    if (initDay > 0)
+                    if (initDay > 0) {
+                        param.put("time", initDay);
                         param.put("due_time", upTime(new Date(), initDay));
-                    else
+                    } else {
+                        param.put("time", "0");
                         param.put("due_time", dataTime);
+                    }
                     param.put("lastLoginTime", dataTime);
                     param.put("active_time", dataTime);
                     service.userAdd(param);
-                    param.put("time", "0");
                     list.put("user", gson.toJson(param));
                 }
             }
