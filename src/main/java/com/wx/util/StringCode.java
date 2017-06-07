@@ -10,7 +10,7 @@ public class StringCode {
     /**
      * 字符串默认键值
      */
-    private static String strDefaultKey = "defaultProxyKey";
+    private static final String STRDEFAULTKEY = "defaultProxyKey";
     private static StringCode code = null;
     private Cipher encryptCipher = null;
     private Cipher decryptCipher = null;
@@ -28,7 +28,7 @@ public class StringCode {
     public static synchronized StringCode getInstance() {
         try {
             if (code == null) {
-                code = new StringCode(strDefaultKey);
+                code = new StringCode(STRDEFAULTKEY);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -45,15 +45,14 @@ public class StringCode {
         for (int i = arrBTmp.length; i < arrB.length; i++) {
             arrB[i] = (byte) (1 + i);
         }
-        Key key = new SecretKeySpec(arrB, "AES");
-        return key;
+        return new SecretKeySpec(arrB, "AES");
     }
 
     private static String byteArr2HexStr(byte[] arrB) throws Exception {
         int iLen = arrB.length;
-        StringBuffer sb = new StringBuffer(iLen * 2);
-        for (int i = 0; i < iLen; i++) {
-            int intTmp = arrB[i];
+        StringBuilder sb = new StringBuilder(iLen * 2);
+        for (byte anArrB : arrB) {
+            int intTmp = anArrB;
             while (intTmp < 0) {
                 intTmp = intTmp + 256;
             }

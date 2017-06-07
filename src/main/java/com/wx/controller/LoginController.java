@@ -60,14 +60,12 @@ public class LoginController extends ServletUtils {
 
     @RequestMapping("/index.do")
     public ModelAndView index(HttpSession session) {
-        Map<String, Object> param = new HashMap<String, Object>();
+        String all, code, daili;
+        Map<String, Object> param = new HashMap<>();
         User user = (User) session.getAttribute("logged");
         ModelAndView model = new ModelAndView("index");
         user = service.getUserById(user.getId());
         session.setAttribute("logged", user);
-        String all = "0";
-        String code = "0";
-        String daili = "0";
         code = service.codeCount(user.getId());
         param.put("u_u_id", user.getId());
         all = service.userCount(param);
@@ -76,6 +74,7 @@ public class LoginController extends ServletUtils {
         model.addObject("all", all);
         model.addObject("code", code);
         model.addObject("daili", daili);
+        model.addObject("due_time", user.getDue_time().substring(0, 11));
         model.addObject("indexExplain", service.getIndexExplain(user.getU_u_id()));
         return model;
     }

@@ -55,7 +55,7 @@ public class GroupController extends ServletUtils {
     public String add(@RequestParam String cid, @RequestParam String name) {
         String error = check(cid, name);
         if (error == null) {
-            Map<String, Object> param = new HashMap<String, Object>();
+            Map<String, Object> param = new HashMap<>();
             param.put("u_id", cid);
             param.put("name", name);
             service.addGroup(param);

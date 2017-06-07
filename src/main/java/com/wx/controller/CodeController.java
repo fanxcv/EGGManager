@@ -47,7 +47,7 @@ public class CodeController extends ServletUtils {
     @RequestMapping(value = "/addCode", method = RequestMethod.POST, produces = {"text/html;charset=UTF-8;"})
     public String add(HttpSession session, @RequestParam String pid, @RequestParam String remark,
                       @RequestParam Long num) {
-        int isAdmin = 1;
+        int isAdmin;
         String error = null;
         String batch = null;
         remark = notEmpty(remark) ? remark : "";
@@ -56,17 +56,17 @@ public class CodeController extends ServletUtils {
         if (!notEmpty(error)) {
             User logged = (User) session.getAttribute("logged");
             isAdmin = Integer.parseInt(logged.getRole()) < 3 ? 0 : 1;
-            Map<String, Object> param = new HashMap<String, Object>();
+            Map<String, Object> param = new HashMap<>();
             param.put("pid", pid);
             param.put("uid", logged.getId());
             Map<String, Long> info = service.findInfo(param);
             long s = info.get("money") - info.get("price") * num * isAdmin;
             if (s >= 0) {
                 batch = DateUtil.getCodeTime();
-                Set<Map<String, Object>> set = new HashSet<Map<String, Object>>();
-                List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
+                Set<Map<String, Object>> set = new HashSet<>();
+                List<Map<String, Object>> list = new ArrayList<>();
                 for (int i = 0; i < num; i++) {
-                    Map<String, Object> code = new HashMap<String, Object>();
+                    Map<String, Object> code = new HashMap<>();
                     code.put("batch", batch);
                     code.put("code", randomStr());
                     code.put("u_id", logged.getId());
@@ -96,7 +96,7 @@ public class CodeController extends ServletUtils {
 
     private String randomStr() {
         String numbers = "1234567890";
-        StringBuffer str = new StringBuffer();
+        StringBuilder str = new StringBuilder();
         Random random = new Random();
         for (int i = 0; i < 8; i++) {
             int num = random.nextInt(10);

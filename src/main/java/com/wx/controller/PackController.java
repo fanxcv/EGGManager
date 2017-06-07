@@ -29,7 +29,7 @@ public class PackController extends ServletUtils {
     @RequestMapping(value = "/getPack/{val}")
     public ModelAndView select(HttpSession session, @PathVariable String val) {
         ModelAndView view = new ModelAndView("/admin/package/list");
-        Map<String, Object> param = new HashMap<String, Object>();
+        Map<String, Object> param = new HashMap<>();
         User logged = (User) session.getAttribute("logged");
         if (notEmpty(val) && "admin".equals(val)) {
             param.put("u_id", logged.getId());
@@ -53,7 +53,7 @@ public class PackController extends ServletUtils {
         price = isNumeric(price) ? price : "1";
         String error = check(cid, name, time, group);
         if (error == null) {
-            Map<String, Object> param = new HashMap<String, Object>();
+            Map<String, Object> param = new HashMap<>();
             param.put("u_id", cid);
             param.put("name", name);
             param.put("time", time);
@@ -81,7 +81,7 @@ public class PackController extends ServletUtils {
         price = isNumeric(price) ? price : "1";
         String error = check(id, "name", "name", "group");
         if (error == null) {
-            Map<String, Object> param = new HashMap<String, Object>();
+            Map<String, Object> param = new HashMap<>();
             param.put("id", id);
             param.put("name", name);
             param.put("time", time);

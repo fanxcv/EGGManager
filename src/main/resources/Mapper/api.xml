@@ -8,7 +8,7 @@
 		SELECT `version` FROM `version` WHERE `name`=#{name}
 	</select>
     <select id="getAdminInfo" parameterType="String" resultType="Map">
-		SELECT `id` FROM `user` WHERE `key`=#{key}
+		SELECT `id`,`role`,`u_u_id` FROM `user` WHERE `key`=#{key}
 	</select>
     <select id="getAppInfo" parameterType="String" resultType="Map">
 		SELECT `AppExplain`,`buyUrl`,`QQ` FROM `setting` WHERE `u_id`=#{id}

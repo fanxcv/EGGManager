@@ -86,7 +86,7 @@
             <if test="locked != null and locked != ''">
                 `locked` = #{locked},
             </if>
-            <if test="money != null and money != ''">
+            <if test="money != null">
                 `money` = #{money},
             </if>
             <if test="group != null and group != ''">

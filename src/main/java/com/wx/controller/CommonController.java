@@ -33,13 +33,13 @@ public class CommonController extends ServletUtils {
     public String download(HttpSession session, HttpServletResponse response, @PathVariable String flag,
                            @RequestParam(value = "ids[]", required = false) String[] ids) {
         if (ids != null && ids.length != 0) {
-            StringBuffer str = new StringBuffer();
+            StringBuilder str = new StringBuilder();
             str.append(DateUtil.getNowTime()).append("\r\n");
             List<User> list = service.userfindListById(Arrays.asList(ids));
             for (User user : list) {
                 str.append(user.getUsername()).append("    ").append(user.getPassword()).append("\r\n");
             }
-            if (str != null && str.length() != 0) {
+            if (str.length() != 0) {
                 String filename = ((User) session.getAttribute("logged")).getUsername() + ".txt";
                 super.download(response, str.toString(), filename);
             }
@@ -54,16 +54,16 @@ public class CommonController extends ServletUtils {
     public String downloadCode(HttpSession session, HttpServletResponse response, @PathVariable String batch) {
         if (notEmpty(batch)) {
             User user = (User) session.getAttribute("logged");
-            StringBuffer str = new StringBuffer();
+            StringBuilder str = new StringBuilder();
             str.append(DateUtil.getNowTime()).append("\r\n");
-            Map<String, Object> param = new HashMap<String, Object>();
+            Map<String, Object> param = new HashMap<>();
             param.put("batch", batch);
             param.put("u_id", user.getId());
             List<String> list = service.getCodeByBatch(param);
             for (final String s : list) {
                 str.append(s).append("\r\n");
             }
-            if (str != null && str.length() != 0) {
+            if (str.length() != 0) {
                 String filename = user.getUsername() + "Code.txt";
                 super.download(response, str.toString(), filename);
             }

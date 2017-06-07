@@ -191,7 +191,7 @@ public class OVServiceImpl extends BaseUtils implements OVService {
     @Override
     public User userfindByName(String username) {
         if (notEmpty(username)) {
-            Map<String, Object> param = new HashMap<String, Object>();
+            Map<String, Object> param = new HashMap<>();
             param.put("username", username);
             return dao.userfind(param);
         }

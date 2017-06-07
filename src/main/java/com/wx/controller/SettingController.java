@@ -34,7 +34,7 @@ public class SettingController extends ServletUtils {
                          @RequestParam(value = "regDay", required = false) String regDay,
                          @RequestParam(value = "QQ", required = false) String QQ) {
         User user = (User) session.getAttribute("logged");
-        Map<String, Object> param = new HashMap<String, Object>();
+        Map<String, Object> param = new HashMap<>();
         switch (val) {
             case "indexExplain":
                 if (!"1".equals(user.getRole()))

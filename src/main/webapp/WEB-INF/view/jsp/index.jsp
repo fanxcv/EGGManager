@@ -35,6 +35,7 @@
 									<c:when test="${logged.role == '4'}">普通代理</c:when>
 									<c:otherwise>普通用户</c:otherwise>
 								</c:choose>
+								${due_time}到期
 							</p>
 							<a href="#"> <img
 								src="<%=request.getContextPath()%>/img/EGG.jpg" width="112px"

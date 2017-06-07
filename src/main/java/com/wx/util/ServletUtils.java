@@ -22,7 +22,7 @@ public class ServletUtils extends BaseUtils {
         if (notEmpty(context)) {
             filename = notEmpty(filename) ? filename : "code.txt";
             try (InputStream fis = new ByteArrayInputStream(context.getBytes());
-                 ServletOutputStream out = response.getOutputStream();) {
+                 ServletOutputStream out = response.getOutputStream()) {
                 byte[] b = new byte[fis.available()];
                 fis.read(b);
                 response.reset();
@@ -66,9 +66,7 @@ public class ServletUtils extends BaseUtils {
     }
 
     protected boolean isAfterNow(String date) {
-        if (strToDate(date).getTime() > (new Date()).getTime())
-            return true;
-        return false;
+        return strToDate(date).getTime() > (new Date()).getTime();
     }
 
     protected String upTime(Date date, long days) {

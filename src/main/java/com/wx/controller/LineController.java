@@ -30,7 +30,7 @@ public class LineController extends ServletUtils {
     public ModelAndView select(HttpSession session) {
         ModelAndView view = new ModelAndView("/admin/line/list");
         User logged = (User) session.getAttribute("logged");
-        String id = null;
+        String id;
         if ("1".equals(logged.getRole()) || "2".equals(logged.getRole()))
             id = logged.getId();
         else
@@ -51,7 +51,7 @@ public class LineController extends ServletUtils {
         index = notEmpty(index) ? index : "0";
         String error = check(cid, name, flag, type, value);
         if (error == null) {
-            Map<String, Object> param = new HashMap<String, Object>();
+            Map<String, Object> param = new HashMap<>();
             param.put("u_id", cid);
             param.put("name", name);
             param.put("flag", flag);
@@ -80,7 +80,7 @@ public class LineController extends ServletUtils {
         index = notEmpty(index) ? index : "0";
         String error = check(id, name, "1", "1", value);
         if (error == null) {
-            Map<String, Object> param = new HashMap<String, Object>();
+            Map<String, Object> param = new HashMap<>();
             param.put("id", id);
             param.put("name", name);
             param.put("index", index);
@@ -117,7 +117,7 @@ public class LineController extends ServletUtils {
 
     private String delNnRr(String str) {
         String[] lines = str.replaceAll("((\r\n)|\n)[\\s\t ]*(\\1)+", "$1").split("\n");
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         for (final String line : lines) {
             if (!line.trim().startsWith("#"))
                 sb.append(line.trim()).append("\r\n");

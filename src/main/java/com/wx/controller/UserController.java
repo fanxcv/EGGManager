@@ -66,7 +66,7 @@ public class UserController extends ServletUtils {
     @RequestMapping(value = "/addUser", method = RequestMethod.POST, produces = {"text/html;charset=UTF-8;"})
     public String add(@RequestParam String cid, @RequestParam String username, @RequestParam String password,
                       @RequestParam(value = "remarks", required = false) String remarks, @RequestParam String group) {
-        String error = null;
+        String error;
         if (service.userfindByName(username) == null) {
             Map<String, Object> param = new HashMap<>();
             param.put("username", username);
@@ -128,7 +128,7 @@ public class UserController extends ServletUtils {
                           @RequestParam(value = "locked", required = false) String locked,
                           @RequestParam(value = "money", required = false) String money,
                           @RequestParam(value = "group", required = false) String group) {
-        String error = null;
+        String error;
         Map<String, Object> param = new HashMap<>();
         if (notEmpty(money))
             param.put("money", Integer.parseInt(money) * 100);
@@ -145,7 +145,7 @@ public class UserController extends ServletUtils {
 
     private String randomStr() {
         String val = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
-        StringBuffer str = new StringBuffer();
+        StringBuilder str = new StringBuilder();
         Random random = new Random();
         for (int i = 0; i < 24; i++) {
             int num = random.nextInt(62);

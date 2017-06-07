@@ -94,7 +94,7 @@ public class EGGApiController extends ServletUtils {
                     }
                     list.put("user", gson.toJson(user));
                 } else {
-                    long initDay = service.findRegDay(admin.get("id") + "");
+                    long initDay = "2".equals(admin.get("role") + "") ? service.findRegDay(admin.get("id") + "") : service.findRegDay(admin.get("u_u_id") + "");
                     if (initDay > 0) {
                         param.put("time", initDay);
                         param.put("due_time", upTime(new Date(), initDay));
@@ -133,12 +133,17 @@ public class EGGApiController extends ServletUtils {
 
     @ResponseBody
     @RequestMapping(value = "/getLine", method = RequestMethod.POST, produces = {"text/html;charset=UTF-8;"})
-    public String getLine(@RequestParam String id) {
+    public String getLine(@RequestParam String id, @RequestParam String name) {
         try {
-            String val = StringCode.getInstance().decrypt(id);
-            Map<String, String> line = service.findLine(val);
-            if (line != null && line.size() != 0)
-                return StringCode.getInstance().encrypt(gson.toJson(line));
+            Map<String, Object> param = new HashMap<>();
+            param.put("name", StringCode.getInstance().decrypt(name));
+            Map<String, String> user = service.getUserInfo(param);
+            if (notEmpty(user.get("due_time")) && Double.parseDouble(DateDown(strToDate(user.get("due_time")), new Date())) > 0) {
+                String val = StringCode.getInstance().decrypt(id);
+                Map<String, String> line = service.findLine(val);
+                if (line != null && line.size() != 0)
+                    return StringCode.getInstance().encrypt(gson.toJson(line));
+            }
             return null;
         } catch (Exception e) {
             return "亲，你乱请求个啥？";
