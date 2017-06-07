@@ -74,8 +74,8 @@ public class LoginController extends ServletUtils {
         model.addObject("all", all);
         model.addObject("code", code);
         model.addObject("daili", daili);
-        model.addObject("due_time", user.getDue_time().substring(0, 11));
         model.addObject("indexExplain", service.getIndexExplain(user.getU_u_id()));
+        model.addObject("due_time", user.getDue_time() == null ? "2222-12-12 " : user.getDue_time().substring(0, 11));
         return model;
     }
 
